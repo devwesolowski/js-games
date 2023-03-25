@@ -1,5 +1,7 @@
 const infoContainer = document.querySelector(".info-bar");
 const clickCount = document.querySelector(".click-count");
+const clickShop = document.querySelector(".shop-container");
+const clickProduct = document.querySelector(".product");
 
 let clicks = 0;
 let clicksPerSecond = 0;
@@ -23,11 +25,11 @@ function addClick(clickAmount = 1) {
 }
 
 // Define the function you want to call
-function openShop(clicks) {
-  switch (clicks) {
-    case 50:
-  }
-
+function openShop(id) {
+  const shopItem = document.getElementById(`item${id}`);
+  shopItem.classList.remove("locked");
+  shopItem.classList.add("unlocked");
+  console.log(shopItem);
   console.log(`Reached ${clicks} Clicks`);
 }
 
@@ -37,9 +39,20 @@ function openShop(clicks) {
 //
 // Watcher function to check the value of clicks
 function watchVariable() {
-  if (clicks >= 50) {
-    //when reaching 50 clicks, unlock shop item
-    openShop(50);
+  console.log(`clicks: ${clicks}`);
+  switch (true) {
+    case clicks >= 150:
+      console.log(`150 clicks hit`);
+      if (document.getElementById("item2").classList.contains("locked")) {
+        openShop(2);
+      }
+      break;
+    case clicks >= 15:
+      //when reaching 15 clicks, unlock shop item1
+      if (document.getElementById("item1").classList.contains("locked")) {
+        openShop(1);
+      }
+      break;
   }
 }
 
@@ -64,3 +77,8 @@ function stopIncrement(intervalId) {
 
 // Starts incrementing the clicks per second
 startIncrement(0.1);
+
+//debug
+function setClicks(newClicks) {
+  clicks = newClicks;
+}

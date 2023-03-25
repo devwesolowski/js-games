@@ -17,6 +17,10 @@ body {
   height: 100%;
   /* width: auto; */
   min-width: 800px;
+  -webkit-user-select: none; /* Safari/Chrome */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
 }
 
 .main-content {
@@ -72,10 +76,6 @@ body {
   font-size: x-large;
   color: black;
   justify-content: center;
-  -webkit-user-select: none; /* Safari/Chrome */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none;
 }
 
 .clicky:hover {
@@ -100,7 +100,6 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-  /* justify-content: space-around; */
   margin: 5px;
   padding: 10px;
 }
@@ -134,17 +133,22 @@ body {
 }
 
 .enabled {
+  cursor: pointer;
+}
+
+.enabled:active {
+  border: 0;
 }
 
 .disabled {
 }
 
 .unlocked {
-  /* display: flex; */
+  display: flex;
 }
 
 .locked {
-  /* display: none; */
+  display: none;
 }
 
 .item-icon {
