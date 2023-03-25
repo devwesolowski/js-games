@@ -2,12 +2,12 @@ const infoContainer = document.querySelector(".info-bar");
 const clickCount = document.querySelector(".click-count");
 const clickShop = document.querySelector(".shop-container");
 const clickProduct = document.querySelector(".product");
+const item0 = document.getElementById("item0").classList;
 const item1 = document.getElementById("item1").classList;
 const item2 = document.getElementById("item2").classList;
 const item3 = document.getElementById("item3").classList;
 const item4 = document.getElementById("item4").classList;
 const item5 = document.getElementById("item5").classList;
-const item6 = document.getElementById("item6").classList;
 
 const totalItems = [0, 0, 0, 0, 0, 0];
 
