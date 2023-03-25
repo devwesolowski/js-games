@@ -14,29 +14,32 @@ body {
   flex-direction: column;
   justify-content: center;
   padding-top: 0.5rem;
-  /* padding-bottom: 0; */
-  /* position: relative; */
-  /* min-width: 900px; */
-  /* width: 1400px; */
-  /* min-height: 800px; */
   height: 100%;
   width: auto;
-  /* margin: -0.45rem auto; */
 }
 
 .main-content {
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
-  /* padding: 20px; */
   min-height: 400px;
 }
 
 .info-bar {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   height: 150px;
   min-height: 100px;
   border: 2px solid white;
+  margin-bottom: -1rem;
+}
+
+.click-count {
+  font-size: 5rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
 }
 
 .messages-container {
@@ -53,6 +56,10 @@ body {
 }
 
 .shop-container {
+  /* position:relative */
+  /* align-self: flex-end; */
+  border: 1rem solid white;
+  height: 50px;
 }
 
 .clicky {
