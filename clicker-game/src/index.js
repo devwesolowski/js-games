@@ -162,8 +162,10 @@ function buyItem(id) {
     console.log(`BUG: Item Clicked But Not Enough Cash`);
   }
 }
-
-//debug functions
+/////////////////////
+//                 //
+//                 //
+//debug functions  //
 function setClicks(newClicks) {
   clicks = newClicks;
   console.log(`Set Total Clicks To: ${newClicks}`);
