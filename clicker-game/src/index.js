@@ -2,6 +2,8 @@ const infoContainer = document.querySelector(".info-bar");
 const clickCount = document.querySelector(".click-count");
 const clickShop = document.querySelector(".shop-container");
 const clickProduct = document.querySelector(".product");
+const products = document.querySelectorAll(".product");
+
 const item0 = document.getElementById("item0").classList;
 const item1 = document.getElementById("item1").classList;
 const item2 = document.getElementById("item2").classList;
@@ -10,26 +12,43 @@ const item4 = document.getElementById("item4").classList;
 const item5 = document.getElementById("item5").classList;
 
 const totalItems = [0, 0, 0, 0, 0, 0];
+const itemCosts = [15, 50, 1000, 5000, 25000, 2000000];
 
 let clicks = 0;
 let clicksPerSecond = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
-  clickCount.innerText = Math.floor(clicks);
+  renderClicks();
 
   document.querySelector(".clicky").addEventListener("click", (e) => {
     addClick();
     console.log(clicks);
   });
+});
 
-  document.querySelector(".clicky").addEventListener("", (e) => {
-    // todo unlock shop button at value of clicks?
+// Loop through each product and add a click event listener
+products.forEach((product) => {
+  product.addEventListener("click", function () {
+    // Check if the product has the "enabled" class
+    if (this.classList.contains("enabled")) {
+      const id = this.id.match(/\d+/)[0];
+      buyItem(id);
+    }
   });
 });
 
+function renderClicks() {
+  clickCount.innerText = Math.floor(clicks);
+}
+
 function addClick(clickAmount = 1) {
   clicks += clickAmount;
-  clickCount.innerText = Math.floor(clicks);
+  renderClicks();
+}
+
+function removeClick(clickAmount) {
+  clicks -= clickAmount;
+  renderClicks();
 }
 
 // Define the function you want to call
@@ -41,8 +60,6 @@ function openShop(id) {
 }
 
 // Incremental Item Logic
-//
-//
 //
 // Watcher function to check variables on interval
 function watchVariable() {
@@ -134,7 +151,17 @@ function enableItem(...ids) {
   });
 }
 
-function buyItem(id) {}
+function buyItem(id) {
+  const cost = itemCosts[id];
+  console.log(`Buy Item Triggerd ID: ${id} and cost ${cost}`);
+  if (cost <= clicks) {
+    totalItems[id] += 1;
+    removeClick(cost);
+    console.log(`BOUGHT!!!`);
+  } else {
+    console.log(`BUG: Item Clicked But Not Enough Cash`);
+  }
+}
 
 //debug functions
 function setClicks(newClicks) {
