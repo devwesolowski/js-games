@@ -5,7 +5,7 @@ let clicks = 0;
 let clicksPerSecond = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
-  clickCount.innerText = clicks;
+  clickCount.innerText = Math.floor(clicks);
 
   document.querySelector(".clicky").addEventListener("click", (e) => {
     console.log(clicks);
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function addClick(clickAmount = 1) {
   clicks += clickAmount;
-  clickCount.innerText = clicks;
+  clickCount.innerText = Math.floor(clicks);
 }
 
 // Define the function you want to call
@@ -63,4 +63,4 @@ function stopIncrement(intervalId) {
 }
 
 // Starts incrementing the clicks per second
-startIncrement();
+startIncrement(0.1);
