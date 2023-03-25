@@ -9,6 +9,8 @@ const item4 = document.getElementById("item4").classList;
 const item5 = document.getElementById("item5").classList;
 const item6 = document.getElementById("item6").classList;
 
+const totalItems = [0, 0, 0, 0, 0, 0];
+
 let clicks = 0;
 let clicksPerSecond = 0;
 
@@ -75,29 +77,29 @@ function stopIncrement(intervalId) {
 function checkShopUnlock() {
   switch (true) {
     case clicks >= 2000000:
-      if (document.getElementById("item3").classList.contains("locked")) {
-        openShop(6);
+      if (document.getElementById("item5").classList.contains("locked")) {
+        openShop(5);
       }
     case clicks >= 25000:
-      if (document.getElementById("item3").classList.contains("locked")) {
-        openShop(5);
+      if (document.getElementById("item4").classList.contains("locked")) {
+        openShop(4);
       }
     case clicks >= 5000:
       if (document.getElementById("item3").classList.contains("locked")) {
-        openShop(4);
-      }
-    case clicks >= 1000:
-      if (document.getElementById("item3").classList.contains("locked")) {
         openShop(3);
       }
-    case clicks >= 150:
+    case clicks >= 1000:
       if (document.getElementById("item2").classList.contains("locked")) {
         openShop(2);
       }
-      break;
-    case clicks >= 15:
+    case clicks >= 150:
       if (document.getElementById("item1").classList.contains("locked")) {
         openShop(1);
+      }
+      break;
+    case clicks >= 15:
+      if (document.getElementById("item0").classList.contains("locked")) {
+        openShop(0);
       }
       break;
   }
@@ -105,44 +107,26 @@ function checkShopUnlock() {
 
 function checkItemPurchasable() {
   switch (true) {
-    // case clicks >= 2000000:
-    //   if (document.getElementById("item3").classList.contains("locked")) {
-    //     openShop(6);
-    //   }
-    // case clicks >= 25000:
-    //   if (document.getElementById("item3").classList.contains("locked")) {
-    //     openShop(5);
-    //   }
-    // case clicks >= 5000:
-    //   if (document.getElementById("item3").classList.contains("locked")) {
-    //     openShop(4);
-    //   }
-    // case clicks >= 1000:
-    //   if (document.getElementById("item3").classList.contains("locked")) {
-    //     openShop(3);
-    //   }
-    // case clicks >= 150:
-    //   if (document.getElementById("item2").classList.contains("locked")) {
-    //     openShop(2);
-    //   }
-    //   break;
     case clicks >= 15:
-      if (item1.contains("disabled")) {
+      if (item0.contains("disabled")) {
         console.log(`disabled`);
-        item1.remove("disabled");
-        item1.add("enabled");
+        item0.remove("disabled");
+        item0.add("enabled");
       } else {
         console.log(`enabled`);
-        item1.remove("disabled");
-        item1.add("enabled");
+        item0.remove("disabled");
+        item0.add("enabled");
       }
       break;
     default:
-      item1.remove("enabled");
-      item1.add("disabled");
+      item0.remove("enabled");
+      item0.add("disabled");
       break;
   }
 }
+
+function buyItem(id) {}
+
 //debug functions
 function setClicks(newClicks) {
   clicks = newClicks;
