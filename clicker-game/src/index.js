@@ -29,7 +29,7 @@ function openShop(id) {
   const shopItem = document.getElementById(`item${id}`);
   shopItem.classList.remove("locked");
   shopItem.classList.add("unlocked");
-  console.log(shopItem);
+  console.log(`Opened shop ${id}`);
   console.log(`Reached ${clicks} Clicks`);
 }
 
@@ -92,13 +92,15 @@ function stopIncrement(intervalId) {
 // Starts incrementing the clicks per second
 startIncrement(0.1);
 
-//debug
+//debug functions
 function setClicks(newClicks) {
   clicks = newClicks;
+  console.log(`Set Total Clicks To: ${newClicks}`);
 }
 
 function unlockShops() {
   for (let i = 1; i < 7; i++) {
     openShop(i);
   }
+  console.log(`Unlocked All Current Shops`);
 }
