@@ -41,14 +41,28 @@ function openShop(id) {
 function watchVariable() {
   console.log(`clicks: ${clicks}`);
   switch (true) {
+    case clicks >= 2000000:
+      if (document.getElementById("item3").classList.contains("locked")) {
+        openShop(6);
+      }
+    case clicks >= 25000:
+      if (document.getElementById("item3").classList.contains("locked")) {
+        openShop(5);
+      }
+    case clicks >= 5000:
+      if (document.getElementById("item3").classList.contains("locked")) {
+        openShop(4);
+      }
+    case clicks >= 1000:
+      if (document.getElementById("item3").classList.contains("locked")) {
+        openShop(3);
+      }
     case clicks >= 150:
-      console.log(`150 clicks hit`);
       if (document.getElementById("item2").classList.contains("locked")) {
         openShop(2);
       }
       break;
     case clicks >= 15:
-      //when reaching 15 clicks, unlock shop item1
       if (document.getElementById("item1").classList.contains("locked")) {
         openShop(1);
       }
@@ -81,4 +95,10 @@ startIncrement(0.1);
 //debug
 function setClicks(newClicks) {
   clicks = newClicks;
+}
+
+function unlockShops() {
+  for (let i = 1; i < 7; i++) {
+    openShop(i);
+  }
 }
