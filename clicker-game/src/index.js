@@ -175,3 +175,16 @@ function unlockShops() {
   }
   console.log(`Unlocked All Current Shops`);
 }
+
+function getItems() {
+  getItemCounts();
+  getItemCosts();
+}
+
+function getItemCosts() {
+  console.log(`Item Costs: ${itemCosts}`);
+}
+
+function getItemCounts() {
+  console.log(`Item Count: ${totalItems}`);
+}
