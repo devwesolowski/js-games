@@ -47,8 +47,7 @@ function openShop(id) {
 // Watcher function to check variables on interval
 function watchVariable() {
   console.log(`clicks: ${clicks}`);
-  checkShopUnlock();
-  checkItemPurchasable();
+  checkShopStatus();
 }
 
 // Call the watcher function at regular intervals using setInterval
@@ -74,55 +73,65 @@ function stopIncrement(intervalId) {
 // startIncrement(0.1);
 
 //Function hecks value of clicks to unlock shop items
-function checkShopUnlock() {
+function checkShopStatus() {
   switch (true) {
     case clicks >= 2000000:
       if (document.getElementById("item5").classList.contains("locked")) {
         openShop(5);
       }
+      enableItem(5);
     case clicks >= 25000:
       if (document.getElementById("item4").classList.contains("locked")) {
         openShop(4);
       }
+      enableItem(4);
     case clicks >= 5000:
       if (document.getElementById("item3").classList.contains("locked")) {
         openShop(3);
       }
+      enableItem(3);
     case clicks >= 1000:
       if (document.getElementById("item2").classList.contains("locked")) {
         openShop(2);
       }
+      enableItem(2);
     case clicks >= 150:
       if (document.getElementById("item1").classList.contains("locked")) {
         openShop(1);
       }
-      break;
+      enableItem(1);
     case clicks >= 15:
-      if (document.getElementById("item0").classList.contains("locked")) {
-        openShop(0);
-      }
+      enableItem(0);
+      break;
+    default:
+      disableItem(0, 1, 2, 3, 4, 5);
       break;
   }
 }
 
-function checkItemPurchasable() {
-  switch (true) {
-    case clicks >= 15:
-      if (item0.contains("disabled")) {
-        console.log(`disabled`);
-        item0.remove("disabled");
-        item0.add("enabled");
-      } else {
-        console.log(`enabled`);
-        item0.remove("disabled");
-        item0.add("enabled");
+function disableItem(...ids) {
+  ids.forEach((id) => {
+    const tempId = document.getElementById(`item${id}`);
+    if (tempId) {
+      if (tempId.classList.contains("enabled")) {
+        tempId.classList.remove("enabled");
+        tempId.classList.add("disabled");
       }
-      break;
-    default:
-      item0.remove("enabled");
-      item0.add("disabled");
-      break;
-  }
+    }
+  });
+}
+
+function enableItem(...ids) {
+  console.log(`ids passed in: ${ids}`);
+  ids.forEach((id) => {
+    const tempId = document.getElementById(`item${id}`);
+    if (tempId) {
+      if (tempId.classList.contains("disabled")) {
+        tempId.classList.remove("disabled");
+        tempId.classList.add("enabled");
+      }
+    }
+  });
 }
 
 function buyItem(id) {}
