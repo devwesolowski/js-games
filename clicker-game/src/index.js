@@ -182,14 +182,15 @@ function buyItem(id) {
   if (cost <= clicks) {
     totalItems[id] += 1;
     removeClick(cost);
+    renderOwned();
+    console.log(intervalId);
+    if (intervalId) {
+      restartIncrement(intervalId, calculateCPS());
+    } else {
+      restartIncrement(0, calculateCPS());
+    }
   } else {
     console.log(`BUG: Item Clicked But Not Enough Cash`);
-  }
-  console.log(intervalId);
-  if (intervalId) {
-    restartIncrement(intervalId, calculateCPS());
-  } else {
-    restartIncrement(0, calculateCPS());
   }
 }
 
