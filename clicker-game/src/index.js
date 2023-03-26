@@ -1,8 +1,9 @@
-const infoContainer = document.querySelector(".info-bar");
+// const infoContainer = document.querySelector(".info-bar");
+// const clickShop = document.querySelector(".shop-container");
+// const clickProduct = document.querySelector(".product");
 const clickCount = document.querySelector(".click-count");
-const clickShop = document.querySelector(".shop-container");
-const clickProduct = document.querySelector(".product");
 const products = document.querySelectorAll(".product");
+const itemsOwned = document.querySelectorAll(".owned");
 
 const item0 = document.getElementById("item0").classList;
 const item1 = document.getElementById("item1").classList;
@@ -12,17 +13,17 @@ const item4 = document.getElementById("item4").classList;
 const item5 = document.getElementById("item5").classList;
 
 const totalItems = [0, 0, 0, 0, 0, 0];
-const itemCosts = [15, 50, 1000, 5000, 25000, 2000000];
+const itemCosts = [15, 100, 1100, 12000, 130000, 14000000];
+const itemCPS = [0.1, 1, 8, 47, 260, 1400];
 
 let clicks = 0;
 let clicksPerSecond = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
   renderClicks();
-
+  renderOwned();
   document.querySelector(".clicky").addEventListener("click", (e) => {
     addClick();
-    console.log(clicks);
   });
 });
 
@@ -41,6 +42,12 @@ function renderClicks() {
   clickCount.innerText = Math.floor(clicks);
 }
 
+function renderOwned() {
+  itemsOwned.forEach((owned, index) => {
+    owned.textContent = totalItems[index];
+  });
+}
+
 function addClick(clickAmount = 1) {
   clicks += clickAmount;
   renderClicks();
@@ -56,7 +63,6 @@ function openShop(id) {
   const shopItem = document.getElementById(`item${id}`);
   shopItem.classList.remove("locked");
   shopItem.classList.add("unlocked");
-  console.log(`Opened shop ${id}`);
 }
 
 // Incremental Item Logic
@@ -70,13 +76,12 @@ function watchVariable() {
 // Call the watcher function at regular intervals using setInterval
 setInterval(watchVariable, 500); // Check every second
 
-let incrementalId; // Stores the clicks per second incremental ID here
+let intervalId; // Stores the clicks per second incremental ID here
 let clickWatcherId; // Stores the watcher for clicks to unlock items
 
 //starts the autoclicks based off cps
 function startIncrement(cps) {
-  console.log(`hit`);
-  incrementalId = setInterval(() => {
+  intervalId = setInterval(() => {
     addClick(cps);
   }, 1000); // Increment every second
 }
@@ -86,39 +91,60 @@ function stopIncrement(intervalId) {
   clearInterval(intervalId);
 }
 
+function restartIncrement(intervalId, cps) {
+  if (intervalId != 0) {
+    clearInterval(intervalId);
+    startIncrement(cps);
+    console.log(`Incremental CPS Restarted!`);
+  } else {
+    startIncrement(cps);
+    console.log(`NEW CPS STARTED!`);
+  }
+}
+
 // Starts incrementing the clicks per second
 // startIncrement(0.1);
 
 //Function hecks value of clicks to unlock shop items
 function checkShopStatus() {
   switch (true) {
-    case clicks >= 2000000:
+    case clicks >= 1400000:
       if (document.getElementById("item5").classList.contains("locked")) {
         openShop(5);
       }
       enableItem(5);
-    case clicks >= 25000:
+      break;
+    case clicks >= 130000:
       if (document.getElementById("item4").classList.contains("locked")) {
         openShop(4);
       }
       enableItem(4);
-    case clicks >= 5000:
+      disableItem(5);
+      break;
+    case clicks >= 12000:
       if (document.getElementById("item3").classList.contains("locked")) {
         openShop(3);
       }
       enableItem(3);
-    case clicks >= 1000:
+      disableItem(4, 5);
+      break;
+    case clicks >= 1100:
       if (document.getElementById("item2").classList.contains("locked")) {
         openShop(2);
       }
       enableItem(2);
-    case clicks >= 150:
+      disableItem(3, 4, 5);
+      break;
+    case clicks >= 100:
       if (document.getElementById("item1").classList.contains("locked")) {
         openShop(1);
       }
       enableItem(1);
+      disableItem(2, 3, 4, 5);
+      break;
     case clicks >= 15:
       enableItem(0);
+      disableItem(1, 2, 3, 4, 5);
       break;
     default:
       disableItem(0, 1, 2, 3, 4, 5);
@@ -139,7 +165,6 @@ function disableItem(...ids) {
 }
 
 function enableItem(...ids) {
-  console.log(`ids passed in: ${ids}`);
   ids.forEach((id) => {
     const tempId = document.getElementById(`item${id}`);
     if (tempId) {
@@ -157,9 +182,40 @@ function buyItem(id) {
   if (cost <= clicks) {
     totalItems[id] += 1;
     removeClick(cost);
-    console.log(`BOUGHT!!!`);
   } else {
     console.log(`BUG: Item Clicked But Not Enough Cash`);
+  }
+  console.log(intervalId);
+  if (intervalId) {
+    restartIncrement(intervalId, calculateCPS());
+  } else {
+    restartIncrement(0, calculateCPS());
+  }
+}
+
+function calculateCPS() {
+  const cpsPerItem = totalItems.map((value, index) => {
+    return value * itemCPS[index];
+  });
+
+  return cpsPerItem.reduce((acc, curr) => acc + curr);
+}
+
+function applyCPSValue(id) {
+  switch (id) {
+    case 0:
+      return;
+      break;
+    case 1:
+      break;
+    case 2:
+      break;
+    case 3:
+      break;
+    case 4:
+      break;
+    case 5:
+      break;
   }
 }
 /////////////////////
@@ -178,9 +234,10 @@ function unlockShops() {
   console.log(`Unlocked All Current Shops`);
 }
 
-function getItems() {
+function getAll() {
   getItemCounts();
   getItemCosts();
+  getItemCPS();
 }
 
 function getItemCosts() {
@@ -189,4 +246,9 @@ function getItemCosts() {
 
 function getItemCounts() {
   console.log(`Item Count: ${totalItems}`);
+}
+
+function getItemCPS() {
+  console.log(`CPS Per Each Item: ${itemCPS}`);
+  console.log(`Total Current CPS: ` + calculateCPS());
 }
